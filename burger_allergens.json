@@ -1,0 +1,136 @@
+{
+    "allergens": [
+        {
+            "name": "Gluten",
+            "ingredients": [
+                "bun",
+                "breadcrumbs",
+                "breaded"
+            ]
+        },
+        {
+            "name": "Dairy",
+            "ingredients": [
+                "cheese",
+                "butter",
+                "milk",
+                "ranch",
+                "cream"
+            ]
+        },
+        {
+            "name": "Soy",
+            "ingredients": [
+                "soy sauce",
+                "soy protein",
+                "tofu"
+            ]
+        },
+        {
+            "name": "Eggs",
+            "ingredients": [
+                "mayonnaise",
+                "egg",
+                "bun",
+                "dressing"
+            ]
+        },
+        {
+            "name": "Peanuts",
+            "ingredients": [
+                "peanut sauce",
+                "peanut butter",
+                "peanut oil"
+            ]
+        },
+        {
+            "name": "Nuts",
+            "ingredients": [
+                "almond",
+                "walnut",
+                "pecan"
+            ]
+        },
+        {
+            "name": "Fish",
+            "ingredients": [
+                "Fish pattie",
+                "anchovies",
+                "fish sauce"
+            ]
+        },
+        {
+            "name": "Shellfish",
+            "ingredients": [
+                "shrimp",
+                "crab",
+                "lobster"
+            ]
+        },
+        {
+            "name": "Sesame",
+            "ingredients": [
+                "sesame seed",
+                "sesame oil"
+            ]
+        },
+        {
+            "name": "wheat",
+            "ingredients": [
+                "bun",
+                "wheat-based filler"
+            ]
+        }
+    ],
+    "dietary_restrictions": [
+        {
+            "restriction": "Vegan",
+            "ingredients": [
+                "beef",
+                "pork",
+                "bacon",
+                "chicken",
+                "turkey",
+                "ham",
+                "fish",
+                "shellfish",
+                "cheese",
+                "butter",
+                "milk",
+                "egg",
+                "mayonnaise"
+            ]
+        },
+        {
+            "restriction": "Vegetarian",
+            "ingredients": [
+                "beef",
+                "pork",
+                "bacon",
+                "chicken",
+                "turkey",
+                "ham",
+                "fish",
+                "shellfish"
+            ]
+        },
+        {
+            "restriction": "Halal",
+            "ingredients": [
+                "pork",
+                "bacon",
+                "ham",
+                "alcohol"
+            ]
+        },
+        {
+            "restriction": "Kosher",
+            "ingredients": [
+                "pork",
+                "bacon",
+                "ham",
+                "shellfish"
+            ]
+        }
+    ]
+}

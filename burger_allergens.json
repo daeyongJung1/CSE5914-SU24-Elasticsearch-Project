@@ -4,7 +4,6 @@
             "name": "Gluten",
             "ingredients": [
                 "bun",
-                "breadcrumbs",
                 "breaded"
             ]
         },
@@ -91,7 +90,6 @@
                 "bacon",
                 "chicken",
                 "turkey",
-                "ham",
                 "fish",
                 "shellfish",
                 "cheese",
@@ -109,7 +107,6 @@
                 "bacon",
                 "chicken",
                 "turkey",
-                "ham",
                 "fish",
                 "shellfish"
             ]
@@ -119,7 +116,6 @@
             "ingredients": [
                 "pork",
                 "bacon",
-                "ham",
                 "alcohol"
             ]
         },
@@ -128,7 +124,6 @@
             "ingredients": [
                 "pork",
                 "bacon",
-                "ham",
                 "shellfish"
             ]
         }

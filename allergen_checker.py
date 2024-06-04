@@ -22,7 +22,7 @@ def fetch_and_parse(url):
 
 def check_allergens(text):
     # index the website
-    es.index(index='recipes', id=1, body={'url': url, 'content': text})
+    es.index(index='recipes', id=2, body={'url': url, 'content': text})
     allergens_data = es.get(index='allergens', id=1)['_source']
     
     allergens = []

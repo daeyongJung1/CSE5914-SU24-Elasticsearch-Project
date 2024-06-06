@@ -26,28 +26,24 @@ def check_allergens(text):
     allergens_data = es.get(index='allergens', id=1)['_source']
     
     allergens = []
-    substitutions = []
     
     # comparing the website data and database
     for allergen in allergens_data['allergens']:
         for ingredient in allergen['Ingredient']:
             res = es.search(index="recipes", body={"query":{"match_phrase":{"content": ingredient}}})
             if res['hits']['total']['value'] > 0:
-                allergens.append((allergen['Ingredient'], allergen['Allergens']))
-                substitutions.append((allergen['Ingredient'], allergen['Substitution']))
+                allergens.append((allergen['Ingredient'], allergen['Allergens'], allergen['Substitution']))
+                break
         
-    return allergens, substitutions
+    return allergens
 
 url = input("Enter the URL of the burger recipe: ")
 text = fetch_and_parse(url)
-allergens, substitution = check_allergens(text)
+allergens = check_allergens(text)
 
 if allergens:
     print("Allergens found in the recipe:")
-    for ingredient, allergen in allergens:
-        print(f"Ingredient: {ingredient}, Allergens: {allergen}")
-    print("Possible Substitutions:")
-    for ingredient, substitution in substitution:
-        print(f"Ingredient: {ingredient}, Substitution: {substitution}")
+    for ingredient, allergen, substitution in allergens:
+        print(f"Ingredient: {ingredient}, Allergens: {allergen}, Substitution: {substitution}")
 else:
     print("No allergens found in the recipe.")

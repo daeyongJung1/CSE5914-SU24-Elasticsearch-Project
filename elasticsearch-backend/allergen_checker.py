@@ -36,7 +36,7 @@ def check_allergens(text):
                 allergens.append((allergen['Ingredient'], allergen['Allergens']))
                 substitutions.append((allergen['Ingredient'], allergen['Substitution']))
         
-    return allergens, substitution
+    return allergens, substitutions
 
 url = input("Enter the URL of the burger recipe: ")
 text = fetch_and_parse(url)

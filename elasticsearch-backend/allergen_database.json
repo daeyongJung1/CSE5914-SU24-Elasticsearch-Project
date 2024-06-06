@@ -39,6 +39,6 @@
         {"Ingredient":"pesto sauce","Allergens":"Tree nuts, Dairy","Substitution":"Nut-free pesto, Hummus"},
         {"Ingredient":"rice","Allergens":"Rice","Substitution":"Quinoa, Cauliflower rice"},
         {"Ingredient":"prawn","Allergens":"Shellfish","Substitution":"Tofu, chicken"},
-        {"Ingredient":"pasta","Allergens":"Gluten, Wheat","Substitution":"Gluten-free pasta, Zucchini noodles"},
+        {"Ingredient":"pasta","Allergens":"Gluten, Wheat","Substitution":"Gluten-free pasta, Zucchini noodles"}
     ]
 }

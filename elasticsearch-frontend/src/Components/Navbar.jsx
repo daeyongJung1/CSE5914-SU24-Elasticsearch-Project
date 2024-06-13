@@ -9,9 +9,6 @@ export default function NavBar() {
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex space-x-4">
                     <Link to="/" className="text-white py-2 px-4 hover:bg-gray-700 rounded">Home</Link>
-                    <Link to="/about" className="text-white py-2 px-4 hover:bg-gray-700 rounded">About</Link>
-                    <Link to="/contact" className="text-white py-2 px-4 hover:bg-gray-700 rounded">Contact</Link>
-                    <Link to="/user/john" className="text-white py-2 px-4 hover:bg-gray-700 rounded">Profile</Link>
                 </div>
                 <div>
                     {user ? (

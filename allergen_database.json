@@ -3,7 +3,6 @@
         {"Ingredient":"bun","Allergens":"Gluten, Wheat","Substitution":"Lettuce"},
         {"Ingredient":"cheese","Allergens":"Dairy","Substitution":"Vegan cheese"},
         {"Ingredient":"mayonnaise","Allergens":"Egg","Substitution":"Sour cream, Avocado, Greek yogurt"},
-        {"Ingredient":"bread","Allergens":"Gluten, Wheat","Substitution":"Gluten-free bread"},
         {"Ingredient":"peanut butter","Allergens":"Peanuts","Substitution":"Almond butter, Sunflower seed butter"},
         {"Ingredient":"soy sauce","Allergens":"Soy","Substitution":"Coconut aminos"},
         {"Ingredient":"shrimp","Allergens":"Shellfish","Substitution":"Chicken"},
@@ -38,7 +37,6 @@
         {"Ingredient":"mustard","Allergens":"Mustard","Substitution":"Horseradish, Wasabi"},
         {"Ingredient":"pesto sauce","Allergens":"Tree nuts, Dairy","Substitution":"Nut-free pesto, Hummus"},
         {"Ingredient":"rice","Allergens":"Rice","Substitution":"Quinoa, Cauliflower rice"},
-        {"Ingredient":"prawn","Allergens":"Shellfish","Substitution":"Tofu, chicken"},
-        {"Ingredient":"pasta","Allergens":"Gluten, Wheat","Substitution":"Gluten-free pasta, Zucchini noodles"}
+        {"Ingredient":"prawn","Allergens":"Shellfish","Substitution":"Tofu, chicken"}
     ]
 }

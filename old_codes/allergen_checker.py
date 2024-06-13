@@ -16,8 +16,12 @@ es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=
 if es.indices.exists(index='allergens'):
     es.indices.delete(index='allergens')
 
+if es.indices.exists(index='recipes'):
+    es.indices.delete(index='recipes')
+
 # Create new indices
 es.indices.create(index='allergens')
+es.indices.create(index='recipes')
 
 # Index each allergen individually
 for idx, allergen in enumerate(allergen_data['allergens']):
@@ -28,25 +32,23 @@ def fetch_and_parse(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup.get_text()
 
-def check_allergens(user_allergies, text):
+def check_allergens(text):
+    es.index(index='recipes', id=1, body={'content': text})
+    
     allergens = []
-
-    for allergy in user_allergies:
-        res = es.search(index="allergens", body={"query": {"match_phrase": {"Allergens": allergy}}})
-        for hit in res['hits']['hits']:
-            allergen_info = hit['_source']
-            if allergen_info['Ingredient'] in text:
-                allergens.append((allergen_info['Ingredient'], allergen_info['Allergens'], allergen_info['Substitution']))
-
+    
+    for idx in range(1, len(allergen_data['allergens']) + 1):
+        allergen = es.get(index='allergens', id=idx)['_source']
+        res = es.search(index="recipes", body={"query": {"match_phrase": {"content": allergen['Ingredient']}}})
+        if res['hits']['total']['value'] > 0:
+            allergens.append((allergen['Ingredient'], allergen['Allergens'], allergen['Substitution']))
+    
     return allergens
 
-# User inputs
-user_allergies = input("Enter the allergies you have (comma separated): ").split(',')
-user_allergies = [allergy.strip().lower() for allergy in user_allergies]
-url = input("Enter the URL of the recipe: ")
-
-text = fetch_and_parse(url).lower()
-allergens = check_allergens(user_allergies, text)
+url = input("Enter the URL of the burger recipe: ")
+text = fetch_and_parse(url)
+print(text)
+allergens = check_allergens(text)
 
 if allergens:
     print("Allergens found in the recipe:")

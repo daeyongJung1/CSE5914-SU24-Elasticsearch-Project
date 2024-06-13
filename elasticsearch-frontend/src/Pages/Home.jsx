@@ -10,7 +10,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex grow flex-col items-center justify-center">
+        <div className="flex grow flex-col items-center justify-center bg-gray-100">
             <input
                 type={inputType === 'link' ? "url" : "text"}
                 value={userInput}

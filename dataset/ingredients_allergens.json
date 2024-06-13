@@ -1,0 +1,57 @@
+/*
+This JSON code provides a structure for representing the ingredients of cheese and the associated allergens, along with their potential allergic reactions.
+*/
+{
+    "cheese": {
+      "ingredients": [
+        "milk",
+        "salt",
+        "enzymes",
+        "starter culture"
+      ],
+      "potential_allergens": [
+        {
+          "name": "milk",
+          "allergen_type": "protein",
+          "allergic_reactions": [
+            "hives",
+            "stomach upset",
+            "vomiting",
+            "diarrhea",
+            "wheezing",
+            "anaphylaxis"
+          ]
+        },
+        {
+          "name": "lactose",
+          "allergen_type": "sugar",
+          "allergic_reactions": [
+            "bloating",
+            "gas",
+            "diarrhea",
+            "stomach cramps"
+          ]
+        },
+        {
+          "name": "histamine",
+          "allergen_type": "compound",
+          "allergic_reactions": [
+            "headaches",
+            "rashes",
+            "hives",
+            "digestive issues"
+          ]
+        },
+        {
+          "name": "additives and preservatives",
+          "allergen_type": "chemical",
+          "allergic_reactions": [
+            "digestive issues",
+            "skin reactions",
+            "respiratory problems"
+          ]
+        }
+      ]
+    }
+  }
+  

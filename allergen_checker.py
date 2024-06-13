@@ -12,8 +12,20 @@ with open('allergen_database.json') as file:
 
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "aQkd6kZywGTVCUSxQrCU"), verify_certs=False)
 
-# index database
-es.index(index='allergens', id=1, body=allergen_data)
+# Delete existing indices if they exist
+if es.indices.exists(index='allergens'):
+    es.indices.delete(index='allergens')
+
+if es.indices.exists(index='recipes'):
+    es.indices.delete(index='recipes')
+
+# Create new indices
+es.indices.create(index='allergens')
+es.indices.create(index='recipes')
+
+# Index each allergen individually
+for idx, allergen in enumerate(allergen_data['allergens']):
+    es.index(index='allergens', id=idx+1, body=allergen)
 
 def fetch_and_parse(url):
     response = requests.get(url)
@@ -21,20 +33,16 @@ def fetch_and_parse(url):
     return soup.get_text()
 
 def check_allergens(text):
-    # index the website
-    es.index(index='recipes', id=2, body={'url': url, 'content': text})
-    allergens_data = es.get(index='allergens', id=1)['_source']
+    es.index(index='recipes', id=1, body={'content': text})
     
     allergens = []
     
-    # comparing the website data and database
-    for allergen in allergens_data['allergens']:
-        for ingredient in allergen['Ingredient']:
-            res = es.search(index="recipes", body={"query":{"match_phrase":{"content": ingredient}}})
-            if res['hits']['total']['value'] > 0:
-                allergens.append((allergen['Ingredient'], allergen['Allergens'], allergen['Substitution']))
-                break
-        
+    for idx in range(1, len(allergen_data['allergens']) + 1):
+        allergen = es.get(index='allergens', id=idx)['_source']
+        res = es.search(index="recipes", body={"query": {"match_phrase": {"content": allergen['Ingredient']}}})
+        if res['hits']['total']['value'] > 0:
+            allergens.append((allergen['Ingredient'], allergen['Allergens'], allergen['Substitution']))
+    
     return allergens
 
 url = input("Enter the URL of the burger recipe: ")

@@ -1,52 +1,6 @@
-[
-  {
-    "name": "cheese",
-    "allergy_category": "dairy",
-    "ingredients": [
-      "Milk",
-      "Starter Culture",
-      "Rennet",
-      "Salt"
-    ]
-  },
-  {
-    "name": "milk",
-    "allergy_category": "dairy",
-    "ingredients": [
-      "Casein",
-      "Whey",
-      "Lactose"
-    ]
-  },
-  {
-    "name": "starter culture",
-    "allergy_category": "dairy",
-    "ingredients": [
-      "Lactic Acid Bacteria"
-    ]
-  },
-  {
-    "name": "rennet",
-    "allergy_category": "dairy",
-    "ingredients": [
-      "Chymosin",
-      "Pepsin"
-    ]
-  },
-  {
-    "name": "salt",
-    "allergy_category": "seasonings and condiments",
-    "ingredients": [
-      "Anti-caking agents"
-    ]
-  }
-]
-
-
 /*
 This JSON code provides a structure for representing the ingredients of cheese and the associated allergens, along with their potential allergic reactions.
 */
-/*
 {
   "food": {
     "name": "cheese",
@@ -97,4 +51,3 @@ This JSON code provides a structure for representing the ingredients of cheese a
     ]
   }
 }
-  */

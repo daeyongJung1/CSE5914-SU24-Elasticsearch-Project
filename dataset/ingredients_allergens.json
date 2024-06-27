@@ -1,90 +1,5 @@
-{
-  "dairy": [
-    {
-      "name": "cheese",
-      "allergy_category": "dairy",
-      "ingredients": [
-        "milk",
-        "starter culture",
-        "rennet",
-        "salt"
-      ]
-    },
-    {
-      "name": "milk",
-      "allergy_category": "dairy",
-      "ingredients": [
-        "Casein",
-        "Whey",
-        "Lactose"
-      ]
-    },
-    {
-      "name": "starter culture",
-      "allergy_category": "dairy",
-      "ingredients": [
-        "Lactic Acid Bacteria"
-      ]
-    },
-    {
-      "name": "rennet",
-      "allergy_category": "dairy",
-      "ingredients": [
-        "Chymosin",
-        "Pepsin"
-      ]
-    },
-    {
-      "name": "salt",
-      "allergy_category": "seasonings and condiments",
-      "ingredients": [
-        "Anti-caking agents"
-      ]
-    }
-  ],
-  "gluten": [
-    {
-      "name": "bread",
-      "allergy_category": "gluten",
-      "ingredients": [
-        "wheat flour",
-        "yeast",
-        "salt"
-      ]
-    },
-    {
-      "name": "wheat flour",
-      "allergy_category": "gluten",
-      "ingredients": [
-        "Gluten",
-        "Starch",
-        "Enzymes"
-      ]
-    },
-    {
-      "name": "yeast",
-      "allergy_category": "none",
-      "ingredients": [
-        "Saccharomyces cerevisiae"
-      ]
-    },
-    {
-      "name": "salt",
-      "allergy_category": "seasonings and condiments",
-      "ingredients": [
-        "Sodium Chloride",
-        "Anti-caking agents"
-      ]
-    }
-  ]
-}
-
-
-/*
-old code. The reason I wrote a new code because JSON does not support multiple root elements in a single JSON document. Each JSON document must contain a single root element.
-//dairy
 [
-  {
+  { //----dairy----
     "name": "cheese",
     "allergy_category": "dairy",
     "ingredients": [
@@ -122,13 +37,11 @@ old code. The reason I wrote a new code because JSON does not support multiple r
     "name": "salt",
     "allergy_category": "seasonings and condiments",
     "ingredients": [
+      "Sodium Chloride",
       "Anti-caking agents"
     ]
-  }
-]
-//gluten
-[
-  {
+  },
+  { //----gluten----
     "name": "bread",
     "allergy_category": "gluten",
     "ingredients": [
@@ -152,14 +65,5 @@ old code. The reason I wrote a new code because JSON does not support multiple r
     "ingredients": [
       "Saccharomyces cerevisiae"
     ]
-  },
-  {
-    "name": "salt",
-    "allergy_category": "seasonings and condiments",
-    "ingredients": [
-      "Sodium Chloride",
-      "Anti-caking agents"
-    ]
   }
 ]
-  */

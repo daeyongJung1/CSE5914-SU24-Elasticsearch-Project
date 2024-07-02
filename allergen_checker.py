@@ -18,10 +18,11 @@ code_dir = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(code_dir, 'dataset', 'ingredients_allergens.json')
 chormedriver_path = os.path.join(code_dir, 'chromedriver.exe')
 
-with open(json_path) as file:
-    allergen_data = json.load(file)
-
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "aQkd6kZywGTVCUSxQrCU"), verify_certs=False)
+
+# # uncomment this part to update the elasticsearch index when the dataset updated
+# with open(json_path) as file:
+#     allergen_data = json.load(file)
 
 # #Delete existing indices if they exist
 # if es.indices.exists(index='allergens'):

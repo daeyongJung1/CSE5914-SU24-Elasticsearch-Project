@@ -7,6 +7,9 @@ from bs4 import BeautifulSoup
 from elasticsearch import Elasticsearch
 import urllib3
 import requests
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
 
 # Ignore warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -84,28 +87,29 @@ def check_allergens(user_allergies, text):
                     
     return found_allergens
 
-def print_result(selenium, url):
-    if selenium == False:
-        text = fetch_and_parse_requests(url).lower()
-    else:
+@app.route('/check_allergens', methods=['POST'])
+def check_allergens_route():
+    data = request.json
+    user_allergies = data.get('user_allergies', [])
+    url = data.get('url', '')
+    use_selenium = data.get('use_selenium', False)
+
+    if use_selenium:
         text = fetch_and_parse_selenium(url).lower()
+    else:
+        text = fetch_and_parse_requests(url).lower()
     
     allergens = check_allergens(user_allergies, text)
-    if allergens:
-        print("Allergens found in the recipe:")
-        for parent, ingredient, allergen in allergens:
-            print(f"Ingredient: {parent}, child ingredient: {ingredient}, Allergens: {allergen}")
-    else:
-        print("No allergens found in the recipe.")
+    result = []
+    for parent, ingredient, allergen in allergens:
+        result.append({
+            "parent_ingredient": parent,
+            "ingredient": ingredient,
+            "allergen": allergen
+        })
 
+    return jsonify(result)
 
-# User inputs
-user_allergies = input("Enter the allergies you have (comma separated): ").split(',')
-user_allergies = [allergy.strip().lower() for allergy in user_allergies]
-url = input("Enter the URL of the recipe: ")
-print_result(False, url)
-
-noresult = input("Did you get zero result? (yes/no): ").strip().lower()
-if noresult == 'yes':
-    print_result(True, url)
+if __name__ == '__main__':
+    app.run(debug=True)
 

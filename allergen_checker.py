@@ -20,20 +20,20 @@ chormedriver_path = os.path.join(code_dir, 'chromedriver.exe')
 
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "aQkd6kZywGTVCUSxQrCU"), verify_certs=False)
 
-# uncomment this part to update the elasticsearch index when the dataset updated
-with open(json_path) as file:
-    allergen_data = json.load(file)
+# # uncomment this part to update the elasticsearch index when the dataset updated
+# with open(json_path) as file:
+#     allergen_data = json.load(file)
 
-#Delete existing indices if they exist
-if es.indices.exists(index='allergens'):
-    es.indices.delete(index='allergens')
+# #Delete existing indices if they exist
+# if es.indices.exists(index='allergens'):
+#     es.indices.delete(index='allergens')
 
-# Create new indices
-es.indices.create(index='allergens')
+# # Create new indices
+# es.indices.create(index='allergens')
 
-# Index each allergen individually
-for idx, allergen in enumerate(allergen_data):
-    es.index(index='allergens', id=idx + 1, body=allergen)
+# # Index each allergen individually
+# for idx, allergen in enumerate(allergen_data):
+#     es.index(index='allergens', id=idx + 1, body=allergen)
 
 # Configure Selenium 
 chrome_options = Options()
@@ -93,12 +93,18 @@ def check_allergens_route():
     data = request.json
     user_allergies = data.get('user_allergies', [])
     url = data.get('url', '')
+    text_blob = data.get('text_blob', '')
     use_selenium = data.get('use_selenium', False)
 
-    if use_selenium:
-        text = fetch_and_parse_selenium(url).lower()
+    if text_blob:
+        text = text_blob.lower()
+    elif url:
+        if use_selenium:
+            text = fetch_and_parse_selenium(url).lower()
+        else:
+            text = fetch_and_parse_requests(url).lower()
     else:
-        text = fetch_and_parse_requests(url).lower()
+        return jsonify({"error": "No URL or text provided"}), 400
     
     allergens = check_allergens(user_allergies, text)
     result = []

@@ -1,5 +1,5 @@
 [
-  { //----dairy----
+  { 
     "name": "cheese",
     "allergy_category": "dairy",
     "ingredients": [
@@ -41,7 +41,7 @@
       "Anti-caking agents"
     ]
   },
-  { //----gluten----
+  { 
     "name": "bread",
     "allergy_category": "gluten",
     "ingredients": [

@@ -7,9 +7,6 @@ from bs4 import BeautifulSoup
 from elasticsearch import Elasticsearch
 import urllib3
 import requests
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
 
 # Ignore warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -18,22 +15,21 @@ code_dir = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(code_dir, 'dataset', 'ingredients_allergens.json')
 chormedriver_path = os.path.join(code_dir, 'chromedriver.exe')
 
+# with open(json_path) as file:
+#     allergen_data = json.load(file)
+
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "aQkd6kZywGTVCUSxQrCU"), verify_certs=False)
 
-# uncomment this part to update the elasticsearch index when the dataset updated
-with open(json_path) as file:
-    allergen_data = json.load(file)
+# #Delete existing indices if they exist
+# if es.indices.exists(index='allergens'):
+#     es.indices.delete(index='allergens')
 
-#Delete existing indices if they exist
-if es.indices.exists(index='allergens'):
-    es.indices.delete(index='allergens')
+# # Create new indices
+# es.indices.create(index='allergens')
 
-# Create new indices
-es.indices.create(index='allergens')
-
-# Index each allergen individually
-for idx, allergen in enumerate(allergen_data):
-    es.index(index='allergens', id=idx + 1, body=allergen)
+# # Index each allergen individually
+# for idx, allergen in enumerate(allergen_data):
+#     es.index(index='allergens', id=idx + 1, body=allergen)
 
 # Configure Selenium 
 chrome_options = Options()
@@ -88,29 +84,28 @@ def check_allergens(user_allergies, text):
                     
     return found_allergens
 
-@app.route('/check_allergens', methods=['POST'])
-def check_allergens_route():
-    data = request.json
-    user_allergies = data.get('user_allergies', [])
-    url = data.get('url', '')
-    use_selenium = data.get('use_selenium', False)
-
-    if use_selenium:
-        text = fetch_and_parse_selenium(url).lower()
-    else:
+def print_result(selenium, url):
+    if selenium == False:
         text = fetch_and_parse_requests(url).lower()
+    else:
+        text = fetch_and_parse_selenium(url).lower()
     
     allergens = check_allergens(user_allergies, text)
-    result = []
-    for parent, ingredient, allergen in allergens:
-        result.append({
-            "parent_ingredient": parent,
-            "ingredient": ingredient,
-            "allergen": allergen
-        })
+    if allergens:
+        print("Allergens found in the recipe:")
+        for parent, ingredient, allergen in allergens:
+            print(f"Ingredient: {parent}, child ingredient: {ingredient}, Allergens: {allergen}")
+    else:
+        print("No allergens found in the recipe.")
 
-    return jsonify(result)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# User inputs
+user_allergies = input("Enter the allergies you have (comma separated): ").split(',')
+user_allergies = [allergy.strip().lower() for allergy in user_allergies]
+url = input("Enter the URL of the recipe: ")
+print_result(False, url)
+
+noresult = input("Did you get zero result? (yes/no): ").strip().lower()
+if noresult == 'yes':
+    print_result(True, url)
 

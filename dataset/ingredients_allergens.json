@@ -10,6 +10,27 @@
     ]
   },
   {
+    "name": "butter",
+    "allergy_category": "dairy",
+    "ingredients": [
+      "milk"
+    ]
+  },
+  {
+    "name": "cream",
+    "allergy_category": "dairy",
+    "ingredients": [
+      "milk"
+    ]
+  },
+  {
+    "name": "yogurt",
+    "allergy_category": "dairy",
+    "ingredients": [
+      "milk"
+    ]
+  },
+  {
     "name": "milk",
     "allergy_category": "dairy",
     "ingredients": [
@@ -50,6 +71,53 @@
       "salt"
     ]
   },
+  { 
+    "name": "pasta",
+    "allergy_category": "gluten",
+    "ingredients": [
+      "wheat flour"
+    ]
+  },
+  { 
+    "name": "couscous",
+    "allergy_category": "gluten",
+    "ingredients": [
+      "wheat flour"
+    ]
+  },
+  { 
+    "name": "beer",
+    "allergy_category": "gluten",
+    "ingredients": [
+      "barley"
+    ]
+  },
+  { 
+    "name": "rye bread",
+    "allergy_category": "gluten",
+    "ingredients": [
+      "rye"
+    ]
+  },
+  { 
+    "name": "barley malt",
+    "allergy_category": "gluten",
+    "ingredients": [
+      "barley"
+    ]
+  },
+  { 
+    "name": "rye",
+    "allergy_category": "gluten",
+    "ingredients": [
+    ]
+  },
+  { 
+    "name": "barley",
+    "allergy_category": "gluten",
+    "ingredients": [
+    ]
+  },
   {
     "name": "wheat flour",
     "allergy_category": "gluten",
@@ -65,5 +133,332 @@
     "ingredients": [
       "Saccharomyces cerevisiae"
     ]
-  }
+  },
+  {
+    "name": "mayonnaise",
+    "allergy_category": "egg",
+    "ingredients": [
+      "egg"
+    ]
+  },
+  {
+    "name": "custard",
+    "allergy_category": "egg",
+    "ingredients": [
+      "egg"
+    ]
+  },
+  {
+    "name": "meringue",
+    "allergy_category": "egg",
+    "ingredients": [
+      "egg"
+    ]
+  },
+  {
+    "name": "egg",
+    "allergy_category": "egg",
+    "ingredients": [
+    ]
+  },
+  {
+    "name": "tofu",
+    "allergy_category": "soy",
+    "ingredients": [
+      "soybeans"
+    ]
+  },
+  {
+    "name": "soy milk",
+    "allergy_category": "soy",
+    "ingredients": [
+      "soybeans"
+    ]
+  },
+  {
+    "name": "soy sauce",
+    "allergy_category": "soy",
+    "ingredients": [
+      "soybeans"
+    ]
+  },
+  {
+    "name": "miso",
+    "allergy_category": "soy",
+    "ingredients": [
+      "soybeans"
+    ]
+  },
+  {
+    "name": "edamame",
+    "allergy_category": "soy",
+    "ingredients": [
+      "soybeans"
+    ]
+  },
+  {
+    "name": "soybeans",
+    "allergy_category": "soy",
+    "ingredients": [
+      "soy proteins",
+      "glycinin",
+      "conglycinin"
+    ]
+  },
+  {
+    "name": "soy proteins",
+    "allergy_category": "soy",
+    "ingredients": [
+    ]
+  },
+  {
+    "name": "glycinin",
+    "allergy_category": "soy",
+    "ingredients": [
+    ]
+  },
+  {
+    "name": "conglycinin",
+    "allergy_category": "soy",
+    "ingredients": [
+    ]
+  },
+  {
+    "name": "tahini",
+    "allergy_category": "sesame",
+    "ingredients": [
+      "sesame seed"
+    ]
+  },
+  {
+    "name": "sesame oil",
+    "allergy_category": "sesame",
+    "ingredients": [
+      "sesame seed"
+    ]
+  },
+  {
+    "name": "sesame seed",
+    "allergy_category": "sesame",
+    "ingredients": [
+      "sesame proteins"
+    ]
+  },
+  {
+    "name": "almond butter",
+    "allergy_category": "nut",
+    "ingredients": [
+      "almond"
+    ]
+  },
+  {
+    "name": "marzipan",
+    "allergy_category": "nut",
+    "ingredients": [
+      "almond"
+    ]
+  },
+  {
+    "name": "almond",
+    "allergy_category": "nut",
+    "ingredients": [
+      "almond proteins"
+    ]
+  },
+  {
+    "name": "pesto",
+    "allergy_category": "nut",
+    "ingredients": [
+      "pine nut"
+    ]
+  },
+  {
+    "name": "pine nut",
+    "allergy_category": "nut",
+    "ingredients": [
+      "pine nut proteins"
+    ]
+  },
+  {
+    "name": "nutella",
+    "allergy_category": "nut",
+    "ingredients": [
+      "hazelnut"
+    ]
+  },
+  {
+    "name": "hazelnut",
+    "allergy_category": "nut",
+    "ingredients": [
+      "hazelnut proteins"
+    ]
+  },
+  {
+    "name": "pecan pie",
+    "allergy_category": "nut",
+    "ingredients": [
+      "pecan"
+    ]
+  },
+  {
+    "name": "pecan",
+    "allergy_category": "nut",
+    "ingredients": [
+      "pecan proteins"
+    ]
+  },
+  {
+    "name": "peanut butter",
+    "allergy_category": "peanut",
+    "ingredients": [
+      "peanut"
+    ]
+  },
+  {
+    "name": "peanut oil",
+    "allergy_category": "peanut",
+    "ingredients": [
+      "peanut"
+    ]
+  },
+  {
+    "name": "peanut",
+    "allergy_category": "peanut",
+    "ingredients": [
+      "peanut proteins"
+    ]
+  },
+  {
+    "name": "salmon",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "tuna",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "cod",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "saldine",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "anchovie",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "mackerel",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "fish proteins",
+    "allergy_category": "fish",
+    "ingredients": [
+      "parvalbumin"
+    ]
+  },
+  {
+    "name": "shrimp",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "lobster",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "crab",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "scallop",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "clam",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "oyster",
+    "allergy_category": "fish",
+    "ingredients": [
+      "fish proteins"
+    ]
+  },
+  {
+    "name": "shellfish proteins",
+    "allergy_category": "shellfish",
+    "ingredients": [
+      "tropomyosin"
+    ]
+  },
+  {
+    "name": "yellow mustard",
+    "allergy_category": "mustard",
+    "ingredients": [
+      "mustard seed"
+    ]
+  },
+  {
+    "name": "dijon mustard",
+    "allergy_category": "mustard",
+    "ingredients": [
+      "mustard seed"
+    ]
+  },
+  {
+    "name": "mustard seed",
+    "allergy_category": "mustard",
+    "ingredients": [
+      "mustard protein"
+    ]
+  },
+  {
+    "name": "mustard green",
+    "allergy_category": "mustard",
+    "ingredients": [
+      "mustard plant"
+    ]
+  },
+  {
+    "name": "mustard plant",
+    "allergy_category": "mustard",
+    "ingredients": [
+      "mustard protein"
+    ]
+  },
 ]

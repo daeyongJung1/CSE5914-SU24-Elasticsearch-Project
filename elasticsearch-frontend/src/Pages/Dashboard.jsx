@@ -11,15 +11,23 @@ const Dashboard = () => {
 
     // Sample data arrays
     const foodData = [
-        { foodItem: 'Example Food 1', reason: 'Reason 1', action: 'Action 1' },
-        { foodItem: 'Example Food 2', reason: 'Reason 2', action: 'Action 2' },
-        { foodItem: 'Example Food 1', reason: 'Reason 1', action: 'Action 1' },
+        { foodItem: 'Dairy', reason: 'Allergy', action: 'Delete' },
+        { foodItem: 'Gluten', reason: 'Allergy', action: 'Delete' },
+        { foodItem: 'Pickles', reason: 'Preference', action: 'Delete' },
     ];
 
     const queryData = [
-        { query: 'Example Query 1', results: 'Results 1', actions: 'Actions 1' },
-        { query: 'Example Food 2 This is a really long sentece to make sure that things will wrap properly', results: 'Results 2', actions: 'Actions 2' },
-        { query: 'Example Food 2 This is a really long sentece to make sure that things will wrap properly', results: 'Results 2', actions: 'Actions 2' },
+        { query: 'https://natashaskitchen.com/perfect-burger-recipe/', results: 'Clean!', actions: 'Delete' },
+        {
+            query: `Sliced cheese (our favorite is thick-sliced, medium cheddar)
+                    Dill pickle slices
+                    Fresh red onions (or caramelized onions)
+                    Tomato,
+                    Green leaf or iceberg lettuce,
+                    Avocado
+                    Bacon + pineapple + the BBQ sauce below
+                    Jalapeños to add some heat `, results: 'Pickles', actions: 'Delete'
+        },
     ];
 
     return (

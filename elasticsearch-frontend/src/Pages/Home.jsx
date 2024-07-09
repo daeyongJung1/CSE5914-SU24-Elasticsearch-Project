@@ -7,7 +7,7 @@ export default function Home() {
     // 'text' or 'link'
     const [inputType, setInputType] = useState('link');
     const [userInput, setUserInput] = useState(null);
-    const [userPreferences, setUserPreferences] = useState(null)
+    const [userPreferences, setUserPreferences] = useState([])
 
     const [showModal, setShowModal] = useState(false);
 

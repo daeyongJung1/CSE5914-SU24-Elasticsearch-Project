@@ -1,17 +1,41 @@
 import { useState } from "react"
 import { useAuth } from "../Contexts/AuthContext"
 import { Navigate, Link } from "react-router-dom"
+import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
+import { useSnackbar } from 'notistack';
 
 export default function Login() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
-    const { user } = useAuth()
+    const { user, login } = useAuth()
+    const { enqueueSnackbar } = useSnackbar()
 
     if (user) return (<Navigate to="/" replace />)
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        login(username, password).then((data) => {
+            if (data.token) {
+                const decoded = jwtDecode(data.token);
+                console.log(decoded);
+                enqueueSnackbar('Login successful!', {
+                    variant: 'success'
+                });
+            }
+            else {
+
+                alert("Error Logging In")
+            }
+        }).catch(ex => {
+            enqueueSnackbar('Login Error!', {
+                variant: 'error',
+                autoHideDuration: 5000
+            });
+            console.error(ex)
+        })
     }
 
     return (

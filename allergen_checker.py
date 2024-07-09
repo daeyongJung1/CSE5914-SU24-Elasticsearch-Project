@@ -8,8 +8,10 @@ from elasticsearch import Elasticsearch
 import urllib3
 import requests
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
 # Ignore warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -89,6 +91,7 @@ def check_allergens(user_allergies, text):
     return found_allergens
 
 @app.route('/check_allergens', methods=['POST'])
+@cross_origin()
 def check_allergens_route():
     data = request.json
     user_allergies = data.get('user_allergies', [])

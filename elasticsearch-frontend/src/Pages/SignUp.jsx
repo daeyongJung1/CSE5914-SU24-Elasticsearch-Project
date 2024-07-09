@@ -1,22 +1,38 @@
 import { useState } from "react"
 import { useAuth } from "../Contexts/AuthContext"
 import { Navigate, Link } from "react-router-dom"
+import { useSnackbar } from 'notistack'
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [passwordVerification, setPasswordVerification] = useState(null);
 
-    const { user } = useAuth()
+    const { user, signup } = useAuth()
+    const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
-    if (user) return (<Navigate to="/" replace />)
+    if (user) return (navigate('/'))
 
     const handleSubmit = (e) => {
-        if (password != passwordVerification) {
-            return alert("Passwords do not match!")
+        e.preventDefault();
+        if (password !== passwordVerification) {
+            enqueueSnackbar('Passwords do not match!', { variant: 'error' });
+            return;
         }
-    }
 
+        signup(username, password)
+            .then(() => {
+                enqueueSnackbar('Signup successful!', {
+                    variant: 'success',
+                    onClose: () => navigate('/login') // Navigate when the toast is closed
+                });
+            })
+            .catch(ex => {
+                enqueueSnackbar('Error Signing Up', { variant: 'error' });
+            });
+    }
     return (
         <div className="grow flex justify-center items-center bg-gray-100">
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/4 flex flex-col justify-evenly">

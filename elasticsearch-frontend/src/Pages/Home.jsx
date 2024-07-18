@@ -52,6 +52,7 @@ export default function Home() {
 
     return (
         <div className="flex grow flex-col items-center justify-center bg-gray-100">
+            <div className="title">Recipe Allergy Scanner</div>
             <textarea
                 type={inputType === 'link' ? "url" : "text"}
                 value={userInput}

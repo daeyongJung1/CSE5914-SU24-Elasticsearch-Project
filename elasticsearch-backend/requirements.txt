@@ -1,0 +1,6 @@
+Flask
+flask-cors
+selenium
+beautifulsoup4
+elasticsearch
+requests

@@ -22,20 +22,20 @@ chormedriver_path = os.path.join(code_dir, 'chromedriver.exe')
 
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "aQkd6kZywGTVCUSxQrCU"), verify_certs=False)
 
-# # uncomment this part to update the elasticsearch index when the dataset updated
-# with open(json_path) as file:
-#     allergen_data = json.load(file)
+# uncomment this part to update the elasticsearch index when the dataset updated
+with open(json_path) as file:
+    allergen_data = json.load(file)
 
-# #Delete existing indices if they exist
-# if es.indices.exists(index='allergens'):
-#     es.indices.delete(index='allergens')
+#Delete existing indices if they exist
+if es.indices.exists(index='allergens'):
+    es.indices.delete(index='allergens')
 
-# # Create new indices
-# es.indices.create(index='allergens')
+# Create new indices
+es.indices.create(index='allergens')
 
-# # Index each allergen individually
-# for idx, allergen in enumerate(allergen_data):
-#     es.index(index='allergens', id=idx + 1, body=allergen)
+# Index each allergen individually
+for idx, allergen in enumerate(allergen_data):
+    es.index(index='allergens', id=idx + 1, body=allergen)
 
 # Configure Selenium 
 chrome_options = Options()

@@ -10,8 +10,8 @@ const secretKey = 'krabby-aptty-secret-formula'
 router.post('/signup', async (req, res) => {
     const { username, password } = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, password: hashedPassword });
+        console.log(password)
+        const newUser = new User({ username, password: password });
         await newUser.save();
         res.status(201).send('User created successfully');
     } catch (error) {
@@ -30,6 +30,9 @@ router.post('/login', async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
+            console.log(username)
+            console.log(password)
+            console.log("Invalid Credentials")
             return res.status(400).send('Invalid credentials');
         }
 

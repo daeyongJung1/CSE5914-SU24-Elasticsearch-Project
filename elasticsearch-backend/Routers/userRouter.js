@@ -4,7 +4,7 @@ const User = require('../Schemas/user.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const secretKey = 'your_secret_key'
+const secretKey = 'krabby-aptty-secret-formula'
 
 // Signup Route
 router.post('/signup', async (req, res) => {

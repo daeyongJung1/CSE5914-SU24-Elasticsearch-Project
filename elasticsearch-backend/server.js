@@ -19,11 +19,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use('/user', userRouter);
 
-
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
-
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });

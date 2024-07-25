@@ -2,23 +2,30 @@ import React, { useState } from 'react';
 import PreferencesModal from '../Components/PreferencesModal';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import ResultsModal from '../Components/ResultsModal';
+import { useAuth } from '../Contexts/AuthContext';
 
 export default function Home() {
-    // 'text' or 'link'
     const [inputType, setInputType] = useState('link');
     const [userInput, setUserInput] = useState(null);
     const [userPreferences, setUserPreferences] = useState([])
 
     const [showModal, setShowModal] = useState(false);
+    const [showResultsModal, setShowResultsModal] = useState(false)
+    const [queryResults, setQueryResults] = useState(null)
 
     const { enqueueSnackbar } = useSnackbar()
+    const { user, processUserUpdate } = useAuth();
 
-    const submitUserInput = () => {
+    const submitUserInput = (avoidances) => {
+        enqueueSnackbar("Processing", {
+            variant: 'info'
+        })
         setShowModal(false);
-        console.log(userPreferences)
+        console.log(avoidances)
 
         var payload = {
-            user_allergies: userPreferences.map(x => x.foodItem),
+            user_allergies: avoidances.map(x => x.food_target),
             useSelenium: false
         };
 
@@ -28,14 +35,62 @@ export default function Home() {
             payload["text_blob"] = userInput;
         }
         axios.post(process.env.REACT_APP_ES_URL, payload).then(({ data }) => {
-            /* Pass this data to the results page */
-
             console.log(data)
+            let formattedData = formatData(data);
+            if (user) {
+                let tempUser = { ...user }
+
+                tempUser.queries.unshift({
+                    query_type: inputType,
+                    query: userInput,
+                    has_flag: data.length > 0,
+                    results: formattedData,
+                    date: Date.now()
+                })
+
+                if (tempUser.queries.length > 10) {
+                    tempUser.queries = tempUser.queries.slice(0, 10)
+                }
+
+                axios.patch(process.env.REACT_APP_API_URL + '/user/queries', {
+                    queries: tempUser.queries
+                }).then(({ data }) => {
+                    processUserUpdate(data);
+                }).catch(ex => {
+                    enqueueSnackbar("Error Syncing With Cloud", {
+                        variant: "error"
+                    });
+                });
+            }
+
+            setQueryResults(formattedData)
+            setShowResultsModal(true)
         }).catch(ex => {
+
+            console.log(ex)
+
             enqueueSnackbar('Error Reviewing!', {
                 variant: 'error'
             })
         })
+    }
+
+    function formatData(data) {
+        const categorizedResults = data.reduce((acc, curr) => {
+            const categoryIndex = acc.findIndex(item => item.allergen === curr.allergen);
+
+            if (categoryIndex > -1) {
+                if (!acc[categoryIndex].ingredients.includes(curr.ingredient)) {
+                    acc[categoryIndex].ingredients.push(curr.ingredient);
+                }
+            } else {
+                acc.push({ allergen: curr.allergen, ingredients: [curr.ingredient] });
+            }
+
+            return acc;
+        }, []);
+
+        return categorizedResults;
     }
 
     const openPreferencesModal = () => {
@@ -47,11 +102,26 @@ export default function Home() {
             variant: 'error'
         })
 
-        setShowModal(true)
+        if (user != null && user.preferences.length > 0) {
+            submitUserInput(user.preferences)
+        }
+        else if (user != null) {
+            enqueueSnackbar("You can save preferences in your account!", {
+                variant: "info"
+            })
+            setShowModal(true);
+        }
+        else {
+            setShowModal(true)
+        }
     }
 
     return (
-        <div className="flex grow flex-col items-center justify-center bg-gray-100">
+        <div className="flex grow flex-col items-center justify-center bg-gray-100 p-8">
+            <div className="text-center mb-8">
+                <h1 className="text-4xl font-bold text-gray-800">Welcome to The Recipe Scanner!</h1>
+                <p className="text-lg text-gray-600">Enter a link or text to check recipes for allergens based on your preferences</p>
+            </div>
             <textarea
                 type={inputType === 'link' ? "url" : "text"}
                 value={userInput}
@@ -80,7 +150,7 @@ export default function Home() {
 
                 <button
                     onClick={openPreferencesModal}
-                    className={`${!userInput || userInput == "" ? "bg-gray-300 text-black" : "bg-blue-500 hover:bg-blue-700"} text-white text-lg font-extrabold rounded-full p-2 h-12 w-12 flex items-center justify-center transition duration-300`}
+                    className={`${!userInput || userInput == "" ? "bg-gray-300 text-black" : "bg-blue-500 hover:bg-blue-700"} text-white text-lg font-extrabold rounded-full pb-1 h-12 w-12 flex items-center justify-center transition duration-300`}
                     disabled={!userInput || userInput == ""}
                 >
                     →
@@ -88,9 +158,22 @@ export default function Home() {
             </div>
             {
                 showModal && (
-                    <PreferencesModal onModalClose={() => setShowModal(false)} onContinueClicked={() => { submitUserInput() }} initialItems={[]} onItemUpdate={(items) => setUserPreferences(items)} />
+                    <PreferencesModal 
+                        onModalClose={() => setShowModal(false)}
+                        onContinueClicked={() => { submitUserInput(userPreferences) }} 
+                        initialItems={[]} 
+                        onItemUpdate={(items) => setUserPreferences(items)} 
+                    />
                 )
             }
+            {showResultsModal && (
+                <ResultsModal
+                    onModalClose={() => setShowResultsModal(false)}
+                    query={userInput}
+                    queryType={inputType}
+                    data={queryResults}              
+                />
+            )}
         </div>
     );
 }

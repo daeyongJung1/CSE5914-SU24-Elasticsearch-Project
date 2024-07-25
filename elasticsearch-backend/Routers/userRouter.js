@@ -1,5 +1,3 @@
-// userRouter.js
-
 const express = require('express');
 const router = express.Router();
 const User = require('../Schemas/user.js');
@@ -12,14 +10,14 @@ const secretKey = 'your_secret_key'
 router.post('/signup', async (req, res) => {
     const { username, password } = req.body;
     try {
-        const newUser = new User({ username, password });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ username, password: hashedPassword });
         await newUser.save();
         res.status(201).send('User created successfully');
     } catch (error) {
         res.status(500).json({ error: 'Error signing up user' });
     }
 });
-
 
 // Login Route
 router.post('/login', async (req, res) => {
@@ -35,14 +33,17 @@ router.post('/login', async (req, res) => {
             return res.status(400).send('Invalid credentials');
         }
 
-        // Create a token
-        const token = jwt.sign(
-            { id: user._id, username: user.username },  // You can add more fields here
-            secretKey,
-            { expiresIn: '1h' }  // Token expires in one hour
-        );
+        const returnPayload = {   
+            id: user._id, 
+            username: user.username,
+            preferences: user.preferences,
+            queries: user.queries
+        }
 
-        res.json({ message: 'Login successful', token });
+        // Create a token
+        const token = jwt.sign(returnPayload, secretKey, { expiresIn: '1h' });
+
+        res.json({ message: 'Login successful', token, user: returnPayload });
     } catch (error) {
         res.status(500).json({ error: 'Error logging in' });
     }
@@ -62,30 +63,70 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-
 // Update Preferences Route
-router.patch('/preference', verifyToken, async (req, res) => {
-    const { preferences } = req.body;  // Assumes preferences are sent in the body
+router.patch('/preferences', verifyToken, async (req, res) => {
+    const { preferences } = req.body; 
     try {
         const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Update preferences
-        user.preferences = preferences;  // Adjust according to your User schema
+        user.preferences = preferences;  
         await user.save();
 
-        // Create a new token
-        const newToken = jwt.sign(
-            { id: user._id, username: user.username, preferences: user.preferences },
-            secretKey,
-            { expiresIn: '1h' }
-        );
+        const returnPayload = { id: user._id, username: user.username, preferences: user.preferences, queries: user.queries }
 
-        res.json({ message: 'Preferences updated successfully', token: newToken });
+        // Create the new token
+        const newToken = jwt.sign(returnPayload, secretKey, { expiresIn: '1h' });
+
+        res.json({ message: 'Preferences updated successfully', token: newToken, user: returnPayload });
     } catch (error) {
         res.status(500).json({ error: 'Error updating preferences' });
+    }
+});
+
+// Update Past Query Route
+router.patch('/queries', verifyToken, async (req, res) => {
+    const { queries } = req.body; 
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        user.queries = queries; 
+        await user.save();
+
+        const returnPayload = { id: user._id, username: user.username, preferences: user.preferences, queries: user.queries }
+
+        // Create the new token
+        const newToken = jwt.sign(returnPayload, secretKey, { expiresIn: '1h' });
+
+        res.json({ message: 'Queries updated successfully', token: newToken, user: returnPayload });
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating queries' });
+    }
+});
+
+router.post('/delete', verifyToken, async (req, res) => {
+    const { password } = req.body;
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).send('Invalid credentials');
+        }
+
+        await User.findByIdAndDelete(req.user.id);
+
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Error deleting user' });
     }
 });
 

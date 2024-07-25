@@ -4,12 +4,20 @@ const bcrypt = require('bcrypt');
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  preferences: {
-    type: ([{
-      food_target: String,
-      reason: String
-    }])
-  }
+  preferences: [{
+    food_target: String,
+    display_name: String,
+    reason: String
+  }],
+  queries: [
+    {
+      query_type: String,
+      query:String,
+      has_flag: Boolean,
+      results: [{allergen: String, ingredients: [String]}],
+      date: Date
+    }
+  ]
 });
 
 // Save the hashed password before saving the model to the database

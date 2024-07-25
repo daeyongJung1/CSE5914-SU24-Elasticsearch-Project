@@ -20,22 +20,25 @@ code_dir = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(code_dir, 'dataset', 'ingredients_allergens.json')
 chormedriver_path = os.path.join(code_dir, 'chromedriver.exe')
 
-es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "aQkd6kZywGTVCUSxQrCU"), verify_certs=False)
+es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "oton*CPxs4TrrNep1UFr"), verify_certs=False)
 
 # # uncomment this part to update the elasticsearch index when the dataset updated
-# with open(json_path) as file:
-#     allergen_data = json.load(file)
+with open(json_path) as file:
+    allergen_data = json.load(file)
 
-# #Delete existing indices if they exist
-# if es.indices.exists(index='allergens'):
-#     es.indices.delete(index='allergens')
+unique_allergens = {item['allergy_category'] for item in allergen_data if 'allergy_category' in item}
+print(unique_allergens)
+
+#Delete existing indices if they exist
+if es.indices.exists(index='allergens'):
+    es.indices.delete(index='allergens')
 
 # # Create new indices
-# es.indices.create(index='allergens')
+es.indices.create(index='allergens')
 
-# # Index each allergen individually
-# for idx, allergen in enumerate(allergen_data):
-#     es.index(index='allergens', id=idx + 1, body=allergen)
+# Index each allergen individually
+for idx, allergen in enumerate(allergen_data):
+    es.index(index='allergens', id=idx + 1, body=allergen)
 
 # Configure Selenium 
 chrome_options = Options()

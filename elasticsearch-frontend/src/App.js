@@ -5,6 +5,7 @@ import Login from './Pages/Login'
 import NavBar from './Components/Navbar';
 import SignUp from './Pages/SignUp';
 import Dashboard from './Pages/Dashboard';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 export default function App(){
   return (
@@ -15,7 +16,7 @@ export default function App(){
         <Route exact path="/" element={<Home/>} />
         <Route exact path="/login" element={<Login/>} />
         <Route exact path="/signup" element={<SignUp/>} />
-        <Route exact path="/dashboard" element={<Dashboard/>} />
+        <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
       </Routes>
     </div>
   );

@@ -22,6 +22,19 @@ export default function SignUp() {
             return;
         }
 
+        if (password.length < 6) {
+            return enqueueSnackbar("Password needs to be 6 characters", {
+                variant: 'info'
+            })
+        }
+    
+        // Check if password contains at least one number
+        if (!/\d/.test(password)) {
+            return enqueueSnackbar("Include at least 1 number", {
+                variant: 'info'
+            })
+        }
+
         signup(username, password)
             .then(() => {
                 enqueueSnackbar('Signup successful!', {
@@ -35,7 +48,7 @@ export default function SignUp() {
     }
     return (
         <div className="grow flex justify-center items-center bg-gray-100">
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/4 flex flex-col justify-evenly">
+            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/3 flex flex-col justify-evenly">
                 <div>
                     <div className="mb-5 mt-5 font-bold text-3xl">Join Us!</div>
                     <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="username">

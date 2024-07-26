@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import { useContext, createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
@@ -10,18 +9,26 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-    // is in the format {username: "jwt"}
     const [user, setUser] = useState(null);
-    const { enqueueSnackbar } = useSnackbar()
+    /*
+        {
+            user: decoded JWT
+        }
+    */
+    const [token, setToken] = useState(null)
+    const [loadingAuth, setLoadingAuth] = useState(true);
 
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         const user = localStorage.getItem('user');
         const token = localStorage.getItem('token');
         if (user && token) {
-            setUser({ user, token });
+            setUser(JSON.parse(user));
+            setToken(token)
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
+        setLoadingAuth(false);
     }, []);
 
     const login = async (username, password) => {
@@ -31,15 +38,15 @@ export function AuthProvider({ children }) {
                 password
             }).then(({ data }) => {
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('user', username);
-                setUser({ user: username, token: data.token });
+                localStorage.setItem('user', JSON.stringify(data.user));
+                setUser(data.user);
+                setToken(data.token)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-                resolve(data)
+                resolve(data);
             }).catch(ex => {
-                reject(ex)
+                reject(ex);
             });
-
-        })
+        });
     };
 
     const logout = () => {
@@ -47,6 +54,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('user');
         delete axios.defaults.headers.common['Authorization'];
         setUser(null);
+        setToken(null)
         enqueueSnackbar('Logout successful!', {
             variant: 'success'
         });
@@ -55,34 +63,44 @@ export function AuthProvider({ children }) {
     const signup = (username, password) => {
         return new Promise((resolve, reject) => {
             axios.post(process.env.REACT_APP_API_URL + '/user/signup', {
-                username: username,
-                password: password
+                username,
+                password
             }).then(({ data }) => {
-                resolve(data)
+                resolve(data);
             }).catch(ex => {
-                console.error(ex)
-                reject(ex)
-            })
-        })
-    }
+                console.error(ex);
+                reject(ex);
+            });
+        });
+    };
 
-    if (!user) {
-        let token = localStorage.getItem('token');
-        let username = localStorage.getItem('user');
-        setUser({ user: username, token: data.token });
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const processUserUpdate = (data) => {
+        try{
+            let {token, user} = data
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+            setUser(user);
+            setToken(token);
+        }
+        catch(ex){
+
+        }
     }
 
     const value = {
         user,
+        token,
+        processUserUpdate,
+        loadingAuth,
         login,
         logout,
         signup
-    }
+    };
 
     return (
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }

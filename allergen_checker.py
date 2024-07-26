@@ -22,18 +22,15 @@ chormedriver_path = os.path.join(code_dir, 'chromedriver.exe')
 
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "oton*CPxs4TrrNep1UFr"), verify_certs=False)
 
-# # uncomment this part to update the elasticsearch index when the dataset updated
+# uncomment this part to update the elasticsearch index when the dataset updated
 with open(json_path) as file:
     allergen_data = json.load(file)
-
-unique_allergens = {item['allergy_category'] for item in allergen_data if 'allergy_category' in item}
-print(unique_allergens)
 
 #Delete existing indices if they exist
 if es.indices.exists(index='allergens'):
     es.indices.delete(index='allergens')
 
-# # Create new indices
+# Create new indices
 es.indices.create(index='allergens')
 
 # Index each allergen individually

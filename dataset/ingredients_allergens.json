@@ -72,6 +72,15 @@
     ]
   },
   { 
+    "name": "bun",
+    "allergy_category": "gluten",
+    "ingredients": [
+      "wheat flour",
+      "yeast",
+      "salt"
+    ]
+  },
+  { 
     "name": "pasta",
     "allergy_category": "gluten",
     "ingredients": [

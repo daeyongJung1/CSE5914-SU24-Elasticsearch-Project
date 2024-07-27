@@ -1,5 +1,7 @@
 # CSE5914-SU24-Elasticsearch-Project
 
+# Presentation slides are in "Presentation slides" folder
+
 # To start the JS backend (in the elasticsearch-backend directory)
 ``` cd elasticsearch-backend ```
 ``` npm install ```
